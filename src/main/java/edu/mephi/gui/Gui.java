@@ -51,6 +51,17 @@ public class Gui extends JFrame {
     // humanComboBox.setSize(400, 10);
   }
 
+  public boolean idExist(int id) {
+    int num = humanComboBox.getItemCount();
+    Human h = null;
+    for (int i = 0; i < num; i++) {
+      h = humanComboBox.getItemAt(i);
+      if (id == h.getId())
+        return true;
+    }
+    return false;
+  }
+
   public void exitAction() { this.dispose(); }
 
   public void switchToNewPatient() { layout.show(mainPane, NEWPATIENT); }

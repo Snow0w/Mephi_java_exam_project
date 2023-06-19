@@ -1,13 +1,16 @@
 package edu.mephi.gui.panes;
 
+import edu.mephi.exceptions.WrongNameLengthException;
 import edu.mephi.gui.Gui;
 import edu.mephi.human.Human;
+import edu.mephi.human.HumanFabric;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -68,9 +71,38 @@ public class NewPatientPane extends JPanel implements ActionListener {
   }
 
   private void addButtonAction() {
-    // TODO change this method
-    mainFrame.getHumanComboBox().addItem(new Human(1, "123", "123", "123"));
+    // mainFrame.getHumanComboBox().addItem(new Human(1, "123", "123", "123"));
+
+    HumanFabric fabric = new HumanFabric();
+    Human human;
+    try {
+      human = fabric.createHuman(idTextField.getText(), nameTextField.getText(),
+                                 secondNameTextField.getText(),
+                                 fathersNameTextField.getText());
+    } catch (NumberFormatException e) {
+      JOptionPane.showMessageDialog(this, "Id should be a number > 0",
+                                    "Wrong input", JOptionPane.ERROR_MESSAGE);
+      return;
+    } catch (WrongNameLengthException e) {
+      JOptionPane.showMessageDialog(this, e.getMessage() + " - wrong length",
+                                    "Wrong input", JOptionPane.ERROR_MESSAGE);
+      return;
+    }
+    if (mainFrame.idExist(human.getId())) {
+      JOptionPane.showMessageDialog(this, "Id already exists", "Wrong input",
+                                    JOptionPane.ERROR_MESSAGE);
+      return;
+    }
+    mainFrame.getHumanComboBox().addItem(human);
+    // TODO create log file
+    // TODO add go to another panel
   }
 
-  private void backButtonAction() { mainFrame.switchToIntro(); }
+  private void backButtonAction() {
+    idTextField.setText("");
+    nameTextField.setText("");
+    secondNameTextField.setText("");
+    fathersNameTextField.setText("");
+    mainFrame.switchToIntro();
+  }
 }
