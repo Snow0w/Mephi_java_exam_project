@@ -74,9 +74,9 @@ public class SelectPane extends JPanel implements ActionListener {
   private void backButtonAction() { mainFrame.switchToIntro(); }
 
   private void showButtonAction() {
-    // TODO Change this method
     Human h = (Human)humanComboBox.getSelectedItem();
     if (h == null)
-      System.out.println("null");
+      return;
+    mainFrame.showPatient(h);
   }
 }

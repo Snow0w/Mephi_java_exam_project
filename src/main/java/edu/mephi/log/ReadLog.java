@@ -34,9 +34,9 @@ public class ReadLog {
     reader = new BufferedReader(new FileReader(filename));
     String line = reader.readLine();
     reader.close();
-    String[] splited = line.split("\\s+");
     Human human;
     try {
+      String[] splited = line.split("\\s+");
       String idText = splited[0];
       String name = splited[1];
       String secondName = splited[2];

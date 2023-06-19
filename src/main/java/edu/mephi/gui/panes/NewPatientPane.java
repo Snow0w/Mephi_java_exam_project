@@ -105,7 +105,7 @@ public class NewPatientPane extends JPanel implements ActionListener {
       return;
     }
     mainFrame.getHumanComboBox().addItem(human);
-    // TODO add go to another panel
+    mainFrame.showPatient(human);
   }
 
   private void backButtonAction() {

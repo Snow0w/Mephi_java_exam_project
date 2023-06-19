@@ -2,6 +2,7 @@ package edu.mephi.measurement;
 
 import edu.mephi.Exam;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Measurement {
   private LocalDateTime time;
@@ -54,6 +55,9 @@ public class Measurement {
   public int getVenousPressure() { return venousPressure; }
   public void setVenousPressure(int venousPressure) {
     this.venousPressure = venousPressure;
+  }
+  public String getStringTime() {
+    return time.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
   }
   public String toString() {
     return new String(time.toString() + " " + Double.toString(temperature) +
