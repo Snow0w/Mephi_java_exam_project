@@ -7,8 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class IntroPane extends JPanel implements ActionListener {
-  private static final int HEIGHT = 600;
-  private static final int WIDTH = 800;
   private JButton newButton;
   private JButton selectButton;
   private JButton exitButton;
@@ -16,7 +14,6 @@ public class IntroPane extends JPanel implements ActionListener {
 
   public IntroPane(Gui parent) {
     mainFrame = parent;
-    this.setSize(WIDTH, HEIGHT);
     newButton = new JButton("New patient");
     selectButton = new JButton("Select patient");
     exitButton = new JButton("Exit");

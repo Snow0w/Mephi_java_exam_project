@@ -12,7 +12,6 @@ public class Human {
     this.secondName = secondName;
     this.fathersName = fathersName;
   }
-
   public int getId() { return id; }
   public void setId(int id) { this.id = id; }
   public String getName() { return name; }
