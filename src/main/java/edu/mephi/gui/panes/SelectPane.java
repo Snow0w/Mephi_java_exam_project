@@ -1,13 +1,18 @@
 package edu.mephi.gui.panes;
 
+import edu.mephi.exceptions.WrongLogFileFormatException;
 import edu.mephi.gui.Gui;
 import edu.mephi.gui.renderModels.HumanComboBoxRender;
 import edu.mephi.human.Human;
+import edu.mephi.log.ReadLog;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class SelectPane extends JPanel implements ActionListener {
@@ -38,7 +43,22 @@ public class SelectPane extends JPanel implements ActionListener {
   private void initHumanComboBox() {
     this.humanComboBox = new JComboBox<>();
     humanComboBox.setRenderer(new HumanComboBoxRender());
-    // humanComboBox.setSize(400, 10);
+    ReadLog reader = new ReadLog();
+    ArrayList<Human> listHuman = new ArrayList<>();
+    try {
+      listHuman = reader.readAllLogs();
+    } catch (IOException e) {
+      JOptionPane.showMessageDialog(
+          this,
+          "Something wrong with log files. Can't read them" + e.getMessage(),
+          "Wrong logs", JOptionPane.ERROR_MESSAGE);
+    } catch (WrongLogFileFormatException e) {
+      JOptionPane.showMessageDialog(this, "Wrong format in " + e.getMessage(),
+                                    "Wrong input", JOptionPane.ERROR_MESSAGE);
+    }
+    for (Human h : listHuman) {
+      humanComboBox.addItem(h);
+    }
   }
 
   @Override

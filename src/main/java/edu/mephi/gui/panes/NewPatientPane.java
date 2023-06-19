@@ -4,10 +4,12 @@ import edu.mephi.exceptions.WrongNameLengthException;
 import edu.mephi.gui.Gui;
 import edu.mephi.human.Human;
 import edu.mephi.human.HumanFabric;
+import edu.mephi.log.WriteLog;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -93,8 +95,16 @@ public class NewPatientPane extends JPanel implements ActionListener {
                                     JOptionPane.ERROR_MESSAGE);
       return;
     }
+    WriteLog log = new WriteLog();
+    try {
+      log.createNewLogFile(human);
+    } catch (IOException e) {
+      JOptionPane.showMessageDialog(this,
+                                    "Can't write logs. Patient isn't added",
+                                    "Wrong input", JOptionPane.ERROR_MESSAGE);
+      return;
+    }
     mainFrame.getHumanComboBox().addItem(human);
-    // TODO create log file
     // TODO add go to another panel
   }
 

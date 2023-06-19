@@ -6,6 +6,7 @@ public class Human {
   private String secondName;
   private String fathersName;
 
+  public Human() {}
   public Human(int id, String name, String secondName, String fathersName) {
     this.id = id;
     this.name = name;
@@ -21,5 +22,9 @@ public class Human {
   public String getFathersName() { return fathersName; }
   public void setFathersName(String fathersName) {
     this.fathersName = fathersName;
+  }
+  public String toString() {
+    return new String(Integer.toString(id) + " " + name + " " + secondName +
+                      " " + fathersName);
   }
 }
