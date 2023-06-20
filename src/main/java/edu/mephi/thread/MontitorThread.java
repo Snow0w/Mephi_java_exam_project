@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class MontitorThread implements Runnable {
-  private static final int SECONDSSLEPP = 1;
+  private static final int SECONDSSLEPP = 5;
   private Human human;
   private ArrayList<Measurement> data;
   private MonitorTableModel tableModel;
