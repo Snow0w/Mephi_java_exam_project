@@ -91,8 +91,6 @@ public class MonitorTableModel extends DefaultTableModel {
   public void updateTable(Measurement measurement) {
     data.removeLast();
     data.addFirst(measurement);
-    // System.out.println(measurement);
-    // System.out.println(measurement.getMeasurementStatus());
     fireTableDataChanged();
   }
 

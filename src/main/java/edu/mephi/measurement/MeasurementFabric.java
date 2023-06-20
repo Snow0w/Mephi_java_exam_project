@@ -2,6 +2,7 @@ package edu.mephi.measurement;
 
 import edu.mephi.Exam;
 import edu.mephi.exceptions.WrongLogFileFormatException;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -10,11 +11,11 @@ public class MeasurementFabric {
   private static final double TEMPERATURE_STEP = 0.1;
   private static final double HEART_RATE_STEP = 1.0;
   private static final double VENOUS_PRESSURE_STEP = 1.0;
-  Random rand;
+  SecureRandom rand;
   MeasurementBounds bounds;
 
   public MeasurementFabric() {
-    rand = new Random();
+    rand = new SecureRandom();
     bounds = new MeasurementBounds();
   }
 
@@ -33,8 +34,6 @@ public class MeasurementFabric {
         (double)old.getVenousPressure(), status.getVenousPressureStatus(),
         VENOUS_PRESSURE_STEP));
     measurement.setTime(LocalDateTime.now());
-    System.out.println("old " + old);
-    System.out.println("new " + measurement);
     return measurement;
   }
 
@@ -43,20 +42,25 @@ public class MeasurementFabric {
     case (Exam.DANGER_LOW_ZONE):
       return chooseDirection(old, 0.80, coeff);
     case (Exam.LOW_ZONE):
-      return chooseDirection(old, 0.52, coeff);
+      return chooseDirection(old, 0.53, coeff);
     case (Exam.NORMAL_ZONE):
-      return chooseDirection(old, 0.60, coeff);
+      return chooseDirection(old, 0.55, coeff);
     case (Exam.HIGH_ZONE):
-      return chooseDirection(old, 0.48, coeff);
+      return chooseDirection(old, 0.47, coeff);
     default:
       return chooseDirection(old, 0.20, coeff);
     }
   }
 
   private double chooseDirection(double old, double probability, double coeff) {
-    if (rand.nextDouble() < 0.05)
+    double first = rand.nextDouble();
+    double second = rand.nextDouble();
+    // if (rand.nextDouble() < 0.05)
+    //   return old;
+    // boolean prob = rand.nextDouble() < probability;
+    if (first < 0.05)
       return old;
-    boolean prob = rand.nextDouble() < probability;
+    boolean prob = second < probability;
     if (prob)
       return old + coeff;
     return old - coeff;
@@ -84,7 +88,6 @@ public class MeasurementFabric {
     DateTimeFormatter formater =
         DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     try {
-      // System.out.println(line);
       String[] splited = line.split("\\s+");
       measurement.setTime(
           LocalDateTime.parse(splited[0] + " " + splited[1], formater));

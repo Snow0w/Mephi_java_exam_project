@@ -1,5 +1,7 @@
 package edu.mephi.measurement;
 
+import edu.mephi.Exam;
+
 public class MeasurementStatus {
   public final static int TEMPERATURE = 0;
   public final static int HEARTRATE = 1;
@@ -26,6 +28,16 @@ public class MeasurementStatus {
   public int getVenousPressureStatus() { return venousPressureStatus; }
   public void setVenousPressureStatus(int venousPressureStatus) {
     this.venousPressureStatus = venousPressureStatus;
+  }
+
+  public boolean isOk() {
+    if (temperatureStatus != Exam.NORMAL_ZONE)
+      return false;
+    if (heartRateStatus != Exam.NORMAL_ZONE)
+      return false;
+    if (venousPressureStatus != Exam.NORMAL_ZONE)
+      return false;
+    return true;
   }
 
   public int getParameterStatusByIndex(int index) {
