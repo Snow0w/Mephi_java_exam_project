@@ -1,6 +1,7 @@
 package edu.mephi;
 
 import edu.mephi.gui.Gui;
+import edu.mephi.stats.Calculate;
 
 public class Exam {
   public static final int DANGER_LOW_ZONE = 0;
@@ -12,5 +13,6 @@ public class Exam {
   public static void main(String[] args) {
     Gui gui = new Gui("Patient simulation");
     gui.setVisible(true);
+    Calculate calculate = new Calculate();
   }
 }

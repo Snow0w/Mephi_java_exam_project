@@ -3,10 +3,12 @@ package edu.mephi.gui.panes;
 import edu.mephi.exceptions.WrongLogFileFormatException;
 import edu.mephi.gui.Gui;
 import edu.mephi.gui.renderModels.MonitorTableModel;
+import edu.mephi.gui.renderModels.StatisticsTableModel;
 import edu.mephi.gui.renderModels.StatusCellRenderer;
 import edu.mephi.human.Human;
 import edu.mephi.log.ReadLog;
 import edu.mephi.measurement.Measurement;
+import edu.mephi.stats.Result;
 import edu.mephi.thread.MontitorThread;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -31,10 +33,16 @@ public class MonitorPane extends JPanel implements ActionListener {
   private JTable monitorTable;
   private Gui mainFrame;
   private MonitorTableModel tableModel;
-  private JScrollPane centerPane;
+  private JScrollPane mainTablePane;
   private ArrayList<Measurement> measureData;
   private Human human;
   Thread monitorThread;
+  private JPanel infoPanel;
+  private JTextField durationInfo;
+  private JTable statTable;
+  private StatisticsTableModel statTableModel;
+  private JScrollPane statTablePane;
+  private ArrayList<Result> statData;
 
   public MonitorPane(Gui parent) {
     mainFrame = parent;
@@ -61,9 +69,23 @@ public class MonitorPane extends JPanel implements ActionListener {
         new StatusCellRenderer());
     monitorTable.getColumnModel().getColumn(3).setCellRenderer(
         new StatusCellRenderer());
-    centerPane = new JScrollPane(monitorTable);
+    mainTablePane = new JScrollPane(monitorTable);
+
+    infoPanel = new JPanel(new BorderLayout());
+    durationInfo = new JTextField();
+    durationInfo.setColumns(80);
+    durationInfo.setEditable(false);
+    infoPanel.add(mainTablePane, BorderLayout.NORTH);
+    infoPanel.add(durationInfo, BorderLayout.SOUTH);
+
+    statData = new ArrayList<>();
+    statTableModel = new StatisticsTableModel(statData);
+    statTable = new JTable(statTableModel);
+    statTablePane = new JScrollPane(statTable);
+    infoPanel.add(statTablePane, BorderLayout.CENTER);
+
     this.add(topPane, BorderLayout.SOUTH);
-    this.add(centerPane, BorderLayout.CENTER);
+    this.add(infoPanel, BorderLayout.CENTER);
     measureData = new ArrayList<>();
     monitorThread = null;
     human = null;
@@ -88,6 +110,7 @@ public class MonitorPane extends JPanel implements ActionListener {
                                     JOptionPane.ERROR_MESSAGE);
       return;
     }
+    durationInfo.setText("");
     mainFrame.switchToIntro();
   }
 
@@ -103,7 +126,7 @@ public class MonitorPane extends JPanel implements ActionListener {
     if (monitorThread != null)
       return;
     MontitorThread thread_worker =
-        new MontitorThread(human, measureData, tableModel);
+        new MontitorThread(human, measureData, tableModel, durationInfo);
     monitorThread = new Thread(thread_worker);
     monitorThread.start();
   }
