@@ -60,8 +60,8 @@ public class Measurement {
     return time.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
   }
   public String toString() {
-    return new String(time.toString() + " " + Double.toString(temperature) +
-                      " " + Integer.toString(heartRate) + " " +
-                      Integer.toString(venousPressure));
+    return new String(
+        this.getStringTime() + " " + Double.toString(temperature) + " " +
+        Integer.toString(heartRate) + " " + Integer.toString(venousPressure));
   }
 }

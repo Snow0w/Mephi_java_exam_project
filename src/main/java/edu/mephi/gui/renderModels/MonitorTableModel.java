@@ -1,18 +1,23 @@
 package edu.mephi.gui.renderModels;
 
 import edu.mephi.measurement.Measurement;
+import edu.mephi.measurement.MeasurementStatus;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 
-public class MonitorTableModel extends AbstractTableModel {
+public class MonitorTableModel extends DefaultTableModel {
   private final int colCnt = 4;
   private final int rowCnt = 10;
-  private ArrayList<Measurement> data;
+  private LinkedList<Measurement> data;
+
+  public Measurement getLastMeasurement() { return data.get(0); }
 
   public MonitorTableModel() {
-    data = new ArrayList<>();
-    for (int i = 0; i < 10; i++) {
+    data = new LinkedList<>();
+    for (int i = 0; i < rowCnt; i++) {
       Measurement m = new Measurement();
       m.setTime(null);
       data.add(m);
@@ -45,19 +50,7 @@ public class MonitorTableModel extends AbstractTableModel {
       return Integer.toString(measurement.getVenousPressure());
     }
   }
-  // @Override
-  // public String getColumnName(int index) {
-  //   switch (index) {
-  //   case (0):
-  //     return "Time";
-  //   case (1):
-  //     return "Temp";
-  //   case (2):
-  //     return "Heart";
-  //   default:
-  //     return "CVP";
-  //   }
-  // }
+
   @Override
   public String getColumnName(int index) {
     switch (index) {
@@ -70,5 +63,43 @@ public class MonitorTableModel extends AbstractTableModel {
     default:
       return "CVP (mmH2O)";
     }
+  }
+
+  public void updateNewPatient(ArrayList<Measurement> measureData) {
+    int len = measureData.size();
+    if (len >= rowCnt) {
+      data =
+          new LinkedList<>(measureData.subList(Math.max(len - rowCnt, 0), len));
+      Collections.reverse(data);
+      fireTableDataChanged();
+      return;
+    }
+    data.clear();
+    len = rowCnt - len;
+    for (int i = 0; i < len; i++) {
+      Measurement m = new Measurement();
+      m.setTime(null);
+      data.add(m);
+    }
+    for (Measurement m : measureData) {
+      data.add(m);
+    }
+    Collections.reverse(data);
+    fireTableDataChanged();
+  }
+
+  public void updateTable(Measurement measurement) {
+    data.removeLast();
+    data.addFirst(measurement);
+    System.out.println(measurement);
+    System.out.println(measurement.getMeasurementStatus());
+    fireTableDataChanged();
+  }
+
+  public MeasurementStatus getRowStatus(int row) {
+    Measurement m = data.get(row);
+    if (m.getTime() == null)
+      return null;
+    return m.getMeasurementStatus();
   }
 }

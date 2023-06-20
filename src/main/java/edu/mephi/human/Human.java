@@ -23,6 +23,13 @@ public class Human {
   public void setFathersName(String fathersName) {
     this.fathersName = fathersName;
   }
+  public String getLogFilename() {
+    return new String(Integer.toString(id) + ".medlog");
+  }
+
+  public String toStringShort() {
+    return new String("Id: " + Integer.toString(id) + ". " + secondName);
+  }
   public String toString() {
     return new String(Integer.toString(id) + " " + name + " " + secondName +
                       " " + fathersName);

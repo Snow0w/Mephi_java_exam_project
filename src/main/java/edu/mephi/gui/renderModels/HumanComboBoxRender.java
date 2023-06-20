@@ -14,7 +14,7 @@ public class HumanComboBoxRender extends DefaultListCellRenderer {
 
     if (value instanceof Human) {
       Human h = (Human)value;
-      value = "Id: " + h.getId() + ". " + h.getSecondName();
+      value = h.toStringShort();
     }
 
     return super.getListCellRendererComponent(list, value, index, isSelected,

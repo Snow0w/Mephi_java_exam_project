@@ -1,17 +1,31 @@
 package edu.mephi.log;
 
 import edu.mephi.human.Human;
+import edu.mephi.measurement.Measurement;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class WriteLog {
   private BufferedWriter writer;
+  private Human human;
 
-  public void createNewLogFile(Human human) throws IOException {
-    String filename = Integer.toString(human.getId()) + ".medlog";
-    writer = new BufferedWriter(new FileWriter(filename));
+  public WriteLog(Human human) throws IOException {
+    this.human = human;
+    String filename = human.getLogFilename();
+    writer = new BufferedWriter(new FileWriter(filename, true));
+  }
+
+  public void createNewLogFile() throws IOException {
     writer.write(human.toString());
     writer.close();
   }
+
+  public void writeMeasurementInLogFile(Measurement measurement)
+      throws IOException {
+    writer.append('\n');
+    writer.append(measurement.toString());
+  }
+
+  public void closeLogFile() throws IOException { writer.close(); }
 }

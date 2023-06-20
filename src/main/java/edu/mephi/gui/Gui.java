@@ -70,8 +70,5 @@ public class Gui extends JFrame {
     return Select.getHumanComboBox();
   }
 
-  public void showPatient(Human human) {
-    Monitor.initPatient(human);
-    layout.show(mainPane, MONITOR);
-  }
+  public void showPatient(Human human) { Monitor.initPatient(human); }
 }

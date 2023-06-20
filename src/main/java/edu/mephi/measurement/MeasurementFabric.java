@@ -1,7 +1,9 @@
 package edu.mephi.measurement;
 
 import edu.mephi.Exam;
+import edu.mephi.exceptions.WrongLogFileFormatException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class MeasurementFabric {
@@ -16,6 +18,8 @@ public class MeasurementFabric {
   }
 
   public Measurement createMeasurement(Measurement old) {
+    if (old == null)
+      return createMeasurement();
     MeasurementStatus status = old.getMeasurementStatus();
     Measurement measurement = new Measurement();
     measurement.setTemperature(makeNewParameter(
@@ -64,6 +68,25 @@ public class MeasurementFabric {
                                                bounds.venousPressureBounds[1]) +
                                   bounds.venousPressureBounds[1]);
     measurement.setTime(LocalDateTime.now());
+    return measurement;
+  }
+
+  public Measurement createMeasurementFromLogLine(String line)
+      throws WrongLogFileFormatException {
+    Measurement measurement = new Measurement();
+    DateTimeFormatter formater =
+        DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    try {
+      String[] splited = line.split("\\s+");
+      measurement.setTime(
+          LocalDateTime.parse(splited[0] + " " + splited[1], formater));
+      measurement.setTemperature(Double.parseDouble(splited[2]));
+      measurement.setHeartRate(Integer.parseInt(splited[3]));
+      measurement.setVenousPressure(Integer.parseInt(splited[4]));
+    } catch (Exception e) {
+      throw new WrongLogFileFormatException("Wrong log file format");
+    }
+
     return measurement;
   }
   private double round(double value, int precision) {

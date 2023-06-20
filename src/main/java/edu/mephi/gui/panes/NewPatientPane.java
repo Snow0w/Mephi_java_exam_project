@@ -95,9 +95,9 @@ public class NewPatientPane extends JPanel implements ActionListener {
                                     JOptionPane.ERROR_MESSAGE);
       return;
     }
-    WriteLog log = new WriteLog();
     try {
-      log.createNewLogFile(human);
+      WriteLog log = new WriteLog(human);
+      log.createNewLogFile();
     } catch (IOException e) {
       JOptionPane.showMessageDialog(this,
                                     "Can't write logs. Patient isn't added",
