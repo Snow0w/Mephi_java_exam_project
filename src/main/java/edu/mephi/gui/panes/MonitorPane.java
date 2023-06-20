@@ -2,7 +2,6 @@ package edu.mephi.gui.panes;
 
 import edu.mephi.exceptions.WrongLogFileFormatException;
 import edu.mephi.gui.Gui;
-import edu.mephi.gui.renderModels.ColorRenderer;
 import edu.mephi.gui.renderModels.MonitorTableModel;
 import edu.mephi.gui.renderModels.StatusCellRenderer;
 import edu.mephi.human.Human;
@@ -56,19 +55,12 @@ public class MonitorPane extends JPanel implements ActionListener {
     topPane.add(backButton);
     tableModel = new MonitorTableModel();
     monitorTable = new JTable(tableModel);
-    // monitorTable.setDefaultRenderer(Objects.class, new NewCellRenderer());
     monitorTable.getColumnModel().getColumn(1).setCellRenderer(
         new StatusCellRenderer());
     monitorTable.getColumnModel().getColumn(2).setCellRenderer(
         new StatusCellRenderer());
     monitorTable.getColumnModel().getColumn(3).setCellRenderer(
         new StatusCellRenderer());
-    // monitorTable.getColumnModel().getColumn(1).setCellRenderer(
-    //     new ColorRenderer());
-    // monitorTable.getColumnModel().getColumn(2).setCellRenderer(
-    //     new ColorRenderer());
-    // monitorTable.getColumnModel().getColumn(3).setCellRenderer(
-    //     new ColorRenderer());
     centerPane = new JScrollPane(monitorTable);
     this.add(topPane, BorderLayout.SOUTH);
     this.add(centerPane, BorderLayout.CENTER);

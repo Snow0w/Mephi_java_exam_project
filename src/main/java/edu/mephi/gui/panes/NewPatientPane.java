@@ -106,13 +106,18 @@ public class NewPatientPane extends JPanel implements ActionListener {
     }
     mainFrame.getHumanComboBox().addItem(human);
     mainFrame.showPatient(human);
+    clearFields();
   }
 
-  private void backButtonAction() {
+  private void clearFields() {
     idTextField.setText("");
     nameTextField.setText("");
     secondNameTextField.setText("");
     fathersNameTextField.setText("");
+  }
+
+  private void backButtonAction() {
+    clearFields();
     mainFrame.switchToIntro();
   }
 }

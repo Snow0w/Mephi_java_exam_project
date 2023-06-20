@@ -18,16 +18,16 @@ public class Exam {
   public static void main(String[] args) {
     Gui gui = new Gui("Patient simulation");
     gui.setVisible(true);
-    MeasurementFabric fabric = new MeasurementFabric();
-    Measurement m = fabric.createMeasurement();
-    System.out.println(m);
-    Measurement m2 = null;
-    for (int i = 0; i < 100; i++) {
-      m2 = fabric.createMeasurement(m);
-      System.out.println(m2);
-      // System.out.println(m2.getMeasurementStatus().toString());
-      m = m2;
-    }
+    // MeasurementFabric fabric = new MeasurementFabric();
+    // Measurement m = fabric.createMeasurement();
+    // System.out.println(m);
+    // Measurement m2 = null;
+    // for (int i = 0; i < 100; i++) {
+    //   m2 = fabric.createMeasurement(m);
+    //   System.out.println(m2);
+    //   // System.out.println(m2.getMeasurementStatus().toString());
+    //   m = m2;
+    // }
     // LocalDateTime x = null;
     // try {
     //

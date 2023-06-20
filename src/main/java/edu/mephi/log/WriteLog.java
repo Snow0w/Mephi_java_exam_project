@@ -23,8 +23,8 @@ public class WriteLog {
 
   public void writeMeasurementInLogFile(Measurement measurement)
       throws IOException {
-    writer.append('\n');
-    writer.append(measurement.toString());
+    String newString = new String("\n" + measurement.toString());
+    writer.append(newString);
   }
 
   public void closeLogFile() throws IOException { writer.close(); }

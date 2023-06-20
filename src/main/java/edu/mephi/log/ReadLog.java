@@ -63,10 +63,13 @@ public class ReadLog {
     String newLine = reader.readLine();
     MeasurementFabric fabric = new MeasurementFabric();
     while (newLine != null) {
-      list.add(fabric.createMeasurementFromLogLine(newLine));
+      if (!newLine.equals("\n") || !newLine.equals(""))
+        list.add(fabric.createMeasurementFromLogLine(newLine));
       newLine = reader.readLine();
     }
     reader.close();
+    list = new ArrayList<>(
+        list.subList(Math.max(list.size() - 10, 0), list.size()));
     return list;
   }
 }

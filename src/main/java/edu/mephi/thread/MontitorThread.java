@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 
 public class MontitorThread implements Runnable {
-  private static final int SECONDSSLEPP = 2;
+  private static final int SECONDSSLEPP = 1;
   private Human human;
   private ArrayList<Measurement> data;
   private MonitorTableModel tableModel;
