@@ -8,22 +8,21 @@ import edu.mephi.gui.renderModels.StatusCellRenderer;
 import edu.mephi.human.Human;
 import edu.mephi.log.ReadLog;
 import edu.mephi.measurement.Measurement;
+import edu.mephi.stats.DataToTableTransformer;
 import edu.mephi.stats.Result;
 import edu.mephi.thread.MontitorThread;
+import edu.mephi.thread.StatThread;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.TableModel;
 
 public class MonitorPane extends JPanel implements ActionListener {
   private JButton startButton;
@@ -42,7 +41,8 @@ public class MonitorPane extends JPanel implements ActionListener {
   private JTable statTable;
   private StatisticsTableModel statTableModel;
   private JScrollPane statTablePane;
-  private ArrayList<Result> statData;
+  private ArrayList<Result[]> statData;
+  private Thread statThread;
 
   public MonitorPane(Gui parent) {
     mainFrame = parent;
@@ -89,6 +89,7 @@ public class MonitorPane extends JPanel implements ActionListener {
     measureData = new ArrayList<>();
     monitorThread = null;
     human = null;
+    statThread = null;
   }
 
   @Override
@@ -115,20 +116,27 @@ public class MonitorPane extends JPanel implements ActionListener {
   }
 
   private void stopButtonAction() {
+    if (monitorThread == null)
+      return;
     while (monitorThread.getState() == Thread.State.WAITING ||
            monitorThread.getState() == Thread.State.TIMED_WAITING) {
       monitorThread.interrupt();
     }
+    statThread.interrupt();
     monitorThread = null;
+    statThread = null;
   }
 
   private void startButtonAction() {
     if (monitorThread != null)
       return;
-    MontitorThread thread_worker =
+    MontitorThread threadWorker =
         new MontitorThread(human, measureData, tableModel, durationInfo);
-    monitorThread = new Thread(thread_worker);
+    monitorThread = new Thread(threadWorker);
     monitorThread.start();
+    StatThread statWorker = new StatThread(statTableModel, measureData);
+    statThread = new Thread(statWorker);
+    statThread.start();
   }
 
   public void initPatient(Human human) {
@@ -152,6 +160,9 @@ public class MonitorPane extends JPanel implements ActionListener {
       return;
     }
     tableModel.updateNewPatient(measureData);
+    this.durationInfo.setText("");
+    DataToTableTransformer tr = new DataToTableTransformer(statTableModel);
+    tr.updateTable(this.measureData);
     mainFrame.switchToMonitor();
   }
 }

@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Gui extends JFrame {
-  private static final int HEIGHT = 600;
+  private static final int HEIGHT = 621;
   private static final int WIDTH = 800;
   private static final String INTRO = "1";
   private static final String NEWPATIENT = "2";

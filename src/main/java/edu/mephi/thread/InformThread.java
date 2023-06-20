@@ -1,6 +1,5 @@
 package edu.mephi.thread;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class InformThread implements Runnable {

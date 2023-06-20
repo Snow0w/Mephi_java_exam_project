@@ -33,7 +33,7 @@ public class Calculate {
 
   private Result variance(double[] arr) {
     Result out = new Result();
-    out.name = new String("Оценка дисперсии");
+    out.name = new String("Дисперсия");
     out.value = StatUtils.populationVariance(arr);
     out.value = round((double)out.value, 1);
     return out;
@@ -59,12 +59,33 @@ public class Calculate {
     return (double)Math.round(value * scale) / scale;
   }
 
-  public ArrayList<Result> calcPerArray(double[] arr) {
-    ArrayList<Result> out = new ArrayList<Result>();
-    out.add(arithmeticMean(arr));
-    out.add(variance(arr));
-    out.add(interval(arr));
-
+  public ArrayList<Result[]> calcForArrays(double[][] arr, int size) {
+    ArrayList<Result[]> out = new ArrayList<>();
+    Result[] res = new Result[size];
+    for (int j = 0; j < size; j++) {
+      res[j] = arithmeticMean(arr[j]);
+    }
+    out.add(res);
+    res = new Result[size];
+    for (int j = 0; j < size; j++) {
+      res[j] = variance(arr[j]);
+    }
+    out.add(res);
+    res = new Result[size];
+    for (int j = 0; j < size; j++) {
+      res[j] = firstQuartile(arr[j]);
+    }
+    out.add(res);
+    res = new Result[size];
+    for (int j = 0; j < size; j++) {
+      res[j] = thirdQuartile(arr[j]);
+    }
+    out.add(res);
+    res = new Result[size];
+    for (int j = 0; j < size; j++) {
+      res[j] = interval(arr[j]);
+    }
+    out.add(res);
     return out;
   }
 }

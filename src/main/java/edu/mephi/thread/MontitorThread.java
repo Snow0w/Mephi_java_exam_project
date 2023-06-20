@@ -6,19 +6,14 @@ import edu.mephi.log.WriteLog;
 import edu.mephi.measurement.Measurement;
 import edu.mephi.measurement.MeasurementFabric;
 import edu.mephi.measurement.MeasurementStatus;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.io.Writer;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import javax.swing.AbstractAction;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 
 public class MontitorThread implements Runnable {
   private static final int SECONDSSLEPP = 1;
@@ -77,7 +72,10 @@ public class MontitorThread implements Runnable {
       measurement = fabric.createMeasurement(prev);
       prev = measurement;
       checkHumanStatus(measurement);
-      synchronized (data) { data.add(measurement); } // TODO add notify for stat
+      synchronized (data) {
+        data.add(measurement);
+        data.notify();
+      }
       writer.writeMeasurementInLogFile(measurement);
       synchronized (tableModel) { tableModel.updateTable(measurement); }
       TimeUnit.SECONDS.sleep(SECONDSSLEPP);

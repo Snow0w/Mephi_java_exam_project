@@ -5,7 +5,6 @@ import edu.mephi.measurement.MeasurementStatus;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 public class MonitorTableModel extends DefaultTableModel {

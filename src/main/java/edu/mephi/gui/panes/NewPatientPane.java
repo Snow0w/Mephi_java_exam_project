@@ -73,8 +73,6 @@ public class NewPatientPane extends JPanel implements ActionListener {
   }
 
   private void addButtonAction() {
-    // mainFrame.getHumanComboBox().addItem(new Human(1, "123", "123", "123"));
-
     HumanFabric fabric = new HumanFabric();
     Human human;
     try {

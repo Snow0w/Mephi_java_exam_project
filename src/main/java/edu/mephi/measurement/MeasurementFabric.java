@@ -5,7 +5,6 @@ import edu.mephi.exceptions.WrongLogFileFormatException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Random;
 
 public class MeasurementFabric {
   private static final double TEMPERATURE_STEP = 0.1;
@@ -55,9 +54,6 @@ public class MeasurementFabric {
   private double chooseDirection(double old, double probability, double coeff) {
     double first = rand.nextDouble();
     double second = rand.nextDouble();
-    // if (rand.nextDouble() < 0.05)
-    //   return old;
-    // boolean prob = rand.nextDouble() < probability;
     if (first < 0.05)
       return old;
     boolean prob = second < probability;
