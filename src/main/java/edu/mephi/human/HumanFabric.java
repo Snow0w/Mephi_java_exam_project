@@ -8,6 +8,7 @@ public class HumanFabric {
       throws NumberFormatException, WrongNameLengthException {
     if (idText == null)
       throw new NumberFormatException();
+    checkNameLength(idText);
     int id = Integer.parseInt(idText);
     if (id < 0)
       throw new NumberFormatException();

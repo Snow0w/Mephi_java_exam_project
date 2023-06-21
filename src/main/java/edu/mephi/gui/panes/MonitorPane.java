@@ -35,7 +35,7 @@ public class MonitorPane extends JPanel implements ActionListener {
   private JScrollPane mainTablePane;
   private ArrayList<Measurement> measureData;
   private Human human;
-  Thread monitorThread;
+  private Thread monitorThread;
   private JPanel infoPanel;
   private JTextField durationInfo;
   private JTable statTable;

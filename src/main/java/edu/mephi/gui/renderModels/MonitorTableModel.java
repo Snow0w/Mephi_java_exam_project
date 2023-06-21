@@ -12,8 +12,6 @@ public class MonitorTableModel extends DefaultTableModel {
   private final int rowCnt = 10;
   private LinkedList<Measurement> data;
 
-  public Measurement getLastMeasurement() { return data.get(0); }
-
   public MonitorTableModel() {
     data = new LinkedList<>();
     for (int i = 0; i < rowCnt; i++) {
@@ -99,4 +97,6 @@ public class MonitorTableModel extends DefaultTableModel {
       return null;
     return m.getMeasurementStatus();
   }
+
+  public Measurement getLastMeasurement() { return data.get(0); }
 }

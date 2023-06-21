@@ -2,6 +2,7 @@ package edu.mephi.measurement;
 
 import edu.mephi.Exam;
 import edu.mephi.exceptions.WrongLogFileFormatException;
+import edu.mephi.stats.Calculate;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,8 +11,8 @@ public class MeasurementFabric {
   private static final double TEMPERATURE_STEP = 0.1;
   private static final double HEART_RATE_STEP = 1.0;
   private static final double VENOUS_PRESSURE_STEP = 1.0;
-  SecureRandom rand;
-  MeasurementBounds bounds;
+  private SecureRandom rand;
+  private MeasurementBounds bounds;
 
   public MeasurementFabric() {
     rand = new SecureRandom();
@@ -25,7 +26,8 @@ public class MeasurementFabric {
     Measurement measurement = new Measurement();
     measurement.setTemperature(makeNewParameter(
         old.getTemperature(), status.getTemperatureStatus(), TEMPERATURE_STEP));
-    measurement.setTemperature(round(measurement.getTemperature(), 1));
+    measurement.setTemperature(
+        Calculate.round(measurement.getTemperature(), 1));
     measurement.setHeartRate((int)makeNewParameter((double)old.getHeartRate(),
                                                    status.getHeartRateStatus(),
                                                    HEART_RATE_STEP));
@@ -67,7 +69,8 @@ public class MeasurementFabric {
     measurement.setTemperature(rand.nextDouble(bounds.temperatureBounds[2] -
                                                bounds.temperatureBounds[1]) +
                                bounds.temperatureBounds[1]);
-    measurement.setTemperature(round(measurement.getTemperature(), 1));
+    measurement.setTemperature(
+        Calculate.round(measurement.getTemperature(), 1));
     measurement.setHeartRate(
         rand.nextInt(bounds.heartRateBounds[2] - bounds.heartRateBounds[1]) +
         bounds.heartRateBounds[1]);
@@ -97,8 +100,8 @@ public class MeasurementFabric {
 
     return measurement;
   }
-  private double round(double value, int precision) {
-    int scale = (int)Math.pow(10, precision);
-    return (double)Math.round(value * scale) / scale;
-  }
+  // private double round(double value, int precision) {
+  //   int scale = (int)Math.pow(10, precision);
+  //   return (double)Math.round(value * scale) / scale;
+  // }
 }
