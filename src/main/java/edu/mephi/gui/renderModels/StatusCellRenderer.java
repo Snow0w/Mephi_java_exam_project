@@ -1,6 +1,5 @@
 package edu.mephi.gui.renderModels;
 
-import edu.mephi.Exam;
 import edu.mephi.measurement.MeasurementStatus;
 import java.awt.Color;
 import java.awt.Component;
@@ -30,19 +29,19 @@ public class StatusCellRenderer extends DefaultTableCellRenderer {
 
   private Component getColourFullCellBackground(JLabel l, int status) {
     switch (status) {
-    case Exam.NORMAL_ZONE:
+    case MeasurementStatus.NORMAL_ZONE:
       l.setBackground(Color.WHITE);
       break;
-    case Exam.DANGER_LOW_ZONE:
+    case MeasurementStatus.DANGER_LOW_ZONE:
       l.setBackground(new Color(153, 0, 0));
       break;
-    case Exam.LOW_ZONE:
+    case MeasurementStatus.LOW_ZONE:
       l.setBackground(new Color(153, 51, 51));
       break;
-    case Exam.HIGH_ZONE:
+    case MeasurementStatus.HIGH_ZONE:
       l.setBackground(new Color(153, 51, 51));
       break;
-    case Exam.DANGER_HIGH_ZONE:
+    case MeasurementStatus.DANGER_HIGH_ZONE:
       l.setBackground(new Color(153, 0, 0));
       break;
     }

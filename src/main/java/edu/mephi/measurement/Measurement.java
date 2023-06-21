@@ -1,6 +1,5 @@
 package edu.mephi.measurement;
 
-import edu.mephi.Exam;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,7 +22,8 @@ public class Measurement {
   public MeasurementStatus getMeasurementStatus() {
     MeasurementBounds bounds = new MeasurementBounds();
     MeasurementStatus status = new MeasurementStatus(
-        Exam.DANGER_HIGH_ZONE, Exam.DANGER_HIGH_ZONE, Exam.DANGER_HIGH_ZONE);
+        MeasurementStatus.DANGER_HIGH_ZONE, MeasurementStatus.DANGER_HIGH_ZONE,
+        MeasurementStatus.DANGER_HIGH_ZONE);
     for (int i = 0; i < 4; i++) {
       if (bounds.temperatureBounds[i] - temperature > 0) {
         status.setTemperatureStatus(i);

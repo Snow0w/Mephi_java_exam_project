@@ -53,7 +53,7 @@ public class MonitorPane extends JPanel implements ActionListener {
     backButton = new JButton("To main window");
     backButton.addActionListener(this);
     humanLabel = new JTextField();
-    humanLabel.setColumns(40);
+    humanLabel.setColumns(25);
     humanLabel.setEditable(false);
     this.setLayout(new BorderLayout());
     JPanel topPane = new JPanel();

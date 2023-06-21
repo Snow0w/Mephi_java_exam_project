@@ -1,6 +1,5 @@
 package edu.mephi.measurement;
 
-import edu.mephi.Exam;
 import edu.mephi.exceptions.WrongLogFileFormatException;
 import edu.mephi.stats.Calculate;
 import java.security.SecureRandom;
@@ -40,13 +39,13 @@ public class MeasurementFabric {
 
   private double makeNewParameter(double old, int status, double coeff) {
     switch (status) {
-    case (Exam.DANGER_LOW_ZONE):
+    case (MeasurementStatus.DANGER_LOW_ZONE):
       return chooseDirection(old, 0.80, coeff);
-    case (Exam.LOW_ZONE):
+    case (MeasurementStatus.LOW_ZONE):
       return chooseDirection(old, 0.53, coeff);
-    case (Exam.NORMAL_ZONE):
+    case (MeasurementStatus.NORMAL_ZONE):
       return chooseDirection(old, 0.55, coeff);
-    case (Exam.HIGH_ZONE):
+    case (MeasurementStatus.HIGH_ZONE):
       return chooseDirection(old, 0.47, coeff);
     default:
       return chooseDirection(old, 0.20, coeff);
@@ -100,8 +99,4 @@ public class MeasurementFabric {
 
     return measurement;
   }
-  // private double round(double value, int precision) {
-  //   int scale = (int)Math.pow(10, precision);
-  //   return (double)Math.round(value * scale) / scale;
-  // }
 }

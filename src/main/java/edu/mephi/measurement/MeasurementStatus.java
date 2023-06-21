@@ -1,8 +1,11 @@
 package edu.mephi.measurement;
 
-import edu.mephi.Exam;
-
 public class MeasurementStatus {
+  public static final int DANGER_LOW_ZONE = 0;
+  public static final int LOW_ZONE = 1;
+  public static final int NORMAL_ZONE = 2;
+  public static final int HIGH_ZONE = 3;
+  public static final int DANGER_HIGH_ZONE = 4;
   public final static int TEMPERATURE = 0;
   public final static int HEARTRATE = 1;
   public final static int VENOUSPRESSURE = 2;
@@ -31,11 +34,11 @@ public class MeasurementStatus {
   }
 
   public boolean isOk() {
-    if (temperatureStatus != Exam.NORMAL_ZONE)
+    if (temperatureStatus != NORMAL_ZONE)
       return false;
-    if (heartRateStatus != Exam.NORMAL_ZONE)
+    if (heartRateStatus != NORMAL_ZONE)
       return false;
-    if (venousPressureStatus != Exam.NORMAL_ZONE)
+    if (venousPressureStatus != NORMAL_ZONE)
       return false;
     return true;
   }
