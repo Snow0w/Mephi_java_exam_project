@@ -96,7 +96,7 @@
 
 ### Скриншоты реализованного интерфейса
 #### 1. [Intro Frame](https://github.com/Snow0w/Mephi_java_exam_project/blob/master/files/IntroFrame.png)
-![](files/IntroFrame%201.png)
+![](files/IntroFrame.png)
 
 #### 2. [New Patient Frame](https://github.com/Snow0w/Mephi_java_exam_project/blob/master/files/NewPatientFrame.png)
 ![](files/NewPatientFrame.png)
